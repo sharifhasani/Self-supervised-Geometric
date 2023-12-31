@@ -9,7 +9,7 @@ import os.path as osp
 
 import torch
 import torch.nn as nn
-from apex import amp
+from torch import amp
 from .iotools import mkdir_if_missing
 
 

@@ -34,7 +34,7 @@ from synbn.sync_batchnorm import convert_model
 try:
     from apex.parallel import DistributedDataParallel as DDP
     from apex.fp16_utils import *
-    from apex import amp
+    from torch import amp
     from apex.multi_tensor_apply import multi_tensor_applier
     use_apex = True
 except ImportError:
