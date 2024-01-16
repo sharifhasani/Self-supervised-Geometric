@@ -7,7 +7,7 @@ from .vehicleid import VehicleID
 
 __imgreid_factory = {
     'veri': VeRi,
-    'vehicleID': VehicleID,
+    # 'vehicleID': VehicleID,
 }
 
 
