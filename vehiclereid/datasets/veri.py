@@ -33,7 +33,14 @@ class VeRi(BaseImageDataset):
         self.gallery_dir = osp.join(self.dataset_dir, 'image_test')
         self.gallery_list = osp.join(self.dataset_dir, 'name_test.txt')
 
-        print(self.__dict__)
+        print(self.dataset_dir)
+        print(self.train_dir)
+        print(self.root)
+        print(self.query_dir)
+        print(self.query_list)
+        print(self.gallery_dir)
+        print(self.gallery_list)
+        print(self.train_list)
         self.check_before_run()
 
         train = self.process_dir(self.train_dir, self.train_list, relabel=True)
