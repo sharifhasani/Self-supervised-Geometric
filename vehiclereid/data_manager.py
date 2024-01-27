@@ -18,7 +18,7 @@ class BaseDataManager(object):
                  use_gpu,
                  source_names,
                  target_names,
-                 root='datasets',
+                 root='data',
                  height=128,
                  width=256,
                  train_batch_size=32,

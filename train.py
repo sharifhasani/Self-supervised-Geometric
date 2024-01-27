@@ -127,7 +127,7 @@ def main():
         for _ in range(args.start_epoch):
             scheduler.step()
 
-    if args.evaluate:
+    if not args.evaluate:
         print('Evaluate only')
 
         if args.flipped_test:
@@ -141,6 +141,9 @@ def main():
             if name == 'veri' or name == 'market1501' or name == 'dukemtmc' or name == 'aicity20':
                 queryloader = testloader_dict[name]['query']
                 galleryloader = testloader_dict[name]['gallery']
+                print("################################\n\n")
+                print(queryloader.__dict__)
+                print("################################\n\n")
                 rank1, mAP_i2i, mAP_i2t, distmat, cmc = test(model, queryloader, galleryloader, use_gpu, epoch=-1,
                                                              save_dir=save_dir, flipped_test=flipped_test)
                 print(mAP_i2t, mAP_i2i, cmc[0], cmc[4])
