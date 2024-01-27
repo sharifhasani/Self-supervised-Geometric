@@ -52,6 +52,7 @@ def main():
     if not args.use_apex:
         use_apex = False
     # torch.autograd.set_detect_anomaly(True)
+    print(args)
     set_random_seed(args.seed)
     if not args.use_avai_gpus:
         os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu_devices
@@ -69,7 +70,7 @@ def main():
             log_name = 'log_test.txt'
     else:
         log_name = 'log_train.txt'
-    sys.stdout = Logger(osp.join(save_dir, log_name))
+    # sys.stdout = Logger(osp.join(save_dir, log_name))
     print('==========\nArgs:{}\n=========='.format(args))
 
     if use_gpu:

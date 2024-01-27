@@ -169,7 +169,7 @@ def argument_parser():
     # ***********************************************************
     # Testing set
     # ************************************************************
-    parser.add_argument('--load-weights', type=str, default='',
+    parser.add_argument('--load-weights', type=bool, default=False,
                         help='load pretrained weights but ignore layers that don\'t match in size')
     parser.add_argument('--evaluate', default=True, type=bool,
                         help='evaluate only')
