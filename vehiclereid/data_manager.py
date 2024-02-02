@@ -73,6 +73,8 @@ class BaseDataManager(object):
         """
         return self.testdataset_dict[name]['query'], self.testdataset_dict[name]['gallery']
 
+def _init_fn(worker_id):
+    np.random.seed(1)
 
 class ImageDataManager(BaseDataManager):
     """
@@ -94,8 +96,7 @@ class ImageDataManager(BaseDataManager):
         self._num_train_cams = 0
 
         for name in self.source_names:
-            dataset = init_imgreid_dataset(
-                root=self.root, name=name, test_size=test_size)
+            dataset = init_imgreid_dataset(root=self.root, name=name, test_size=test_size)
 
             for img_path, pid, camid in dataset.train:
                 pid += self._num_train_pids
@@ -111,8 +112,6 @@ class ImageDataManager(BaseDataManager):
             num_instances=self.num_instances,
         )
 
-        def _init_fn(worker_id):
-            np.random.seed(1)
 
         self.trainloader = DataLoader(
             ImageDataset(train, transform=self.transform_train), sampler=self.train_sampler,
