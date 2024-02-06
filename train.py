@@ -62,7 +62,7 @@ def main():
     if args.evaluate and args.load_weights:
         save_dir = os.path.dirname(args.load_weights)
     else:
-        save_dir = './logs/' + str(datetime.datetime.now())[:19]
+        save_dir = './logs/' + str(datetime.datetime.now())[:19].replace(':', '-')
     if args.evaluate:
         if args.target_names[0] == 'vehicleID':
             log_name = 'log_test_{}.txt'.format(args.test_size)
