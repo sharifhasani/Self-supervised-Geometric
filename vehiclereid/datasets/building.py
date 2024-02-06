@@ -74,7 +74,7 @@ class Building(BaseImageDataset):
 
         pid_container = set()
         for img_path in img_paths:
-            pid, _ = map(int, pattern.search(img_path).groups())
+            image_number, category, cam_id = map(int, pattern.search(img_path).groups())
             if pid == -1:
                 continue  # junk images are just ignored
             pid_container.add(pid)
