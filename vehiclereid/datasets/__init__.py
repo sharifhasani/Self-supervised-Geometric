@@ -3,10 +3,12 @@ from __future__ import division
 from __future__ import print_function
 
 from .veri import VeRi
+from .building import Building
 from .vehicleid import VehicleID
 
 __imgreid_factory = {
     'veri': VeRi,
+    'building': Building
     # 'vehicleID': VehicleID,
 }
 
