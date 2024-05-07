@@ -60,7 +60,7 @@ def main():
     if args.use_cpu:
         use_gpu = False
     if args.evaluate and args.load_weights:
-        save_dir = os.path.dirname(args.load_weights)
+        save_dir = os.path.dirname("./model-199.pth")
     else:
         save_dir = './logs/' + str(datetime.datetime.now())[:19].replace(':', '-')
     if args.evaluate:
@@ -92,8 +92,8 @@ def main():
         model = convert_model(model)
     print('Model size: {:.3f} M'.format(count_num_param(model)))
 
-    if args.evaluate and args.load_weights and check_isfile(args.load_weights):
-        load_pretrained_weights(model, args.load_weights)
+    if args.evaluate and args.load_weights and check_isfile("./model-199.pth"):
+        load_pretrained_weights(model, "./model-199.pth")
 
     criterion_xent = CrossEntropyLoss(num_classes=dm.num_train_pids, use_gpu=use_gpu, label_smooth=args.label_smooth)
     criterion_htri = TripletLoss(margin=args.margin)
@@ -127,7 +127,7 @@ def main():
         for _ in range(args.start_epoch):
             scheduler.step()
 
-    if not args.evaluate:
+    if args.evaluate:
         print('Evaluate only')
 
         if args.flipped_test:
@@ -138,15 +138,14 @@ def main():
         for name in args.target_names:
             print('Evaluating {} ...'.format(name))
 
-            if name == 'veri' or name == 'market1501' or name == 'dukemtmc' or name == 'aicity20':
+            if name == 'veri' or name == 'market1501' or name == 'dukemtmc' or name == 'aicity20' or 'building':
                 queryloader = testloader_dict[name]['query']
                 galleryloader = testloader_dict[name]['gallery']
-                print("################################\n\n")
-                print(queryloader.__dict__)
-                print("################################\n\n")
                 rank1, mAP_i2i, mAP_i2t, distmat, cmc = test(model, queryloader, galleryloader, use_gpu, epoch=-1,
                                                              save_dir=save_dir, flipped_test=flipped_test)
                 print(mAP_i2t, mAP_i2i, cmc[0], cmc[4])
+                print(distmat.shape)
+                print(distmat)
             elif name == 'vehicleID':
                 cmc1 = []
                 cmc5 = []
@@ -541,6 +540,7 @@ def test(model, queryloader, galleryloader, use_gpu, epoch=0, save_dir=None, ran
 
         # if return_distmat:
         #     return distmat
+        np.savetxt('test1.txt', distmat, fmt='%d')
         return cmc[0], mAP, 0.0, distmat, cmc
 
 

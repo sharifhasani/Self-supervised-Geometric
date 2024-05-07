@@ -38,9 +38,9 @@ class Building(BaseImageDataset):
 
         self.check_before_run()
 
-        train = self.process_dir(self.train_dir)
-        query = self.process_dir(self.query_dir)
-        gallery = self.process_dir(self.gallery_dir)
+        train = self.process_dir(self.train_dir, type='all')
+        query = self.process_dir(self.query_dir, type='side')
+        gallery = self.process_dir(self.gallery_dir, type='sat')
 
         if verbose:
             print('=> Building loaded')
@@ -80,8 +80,19 @@ class Building(BaseImageDataset):
         pid2label = {pid: label for label, pid in enumerate(pid_container)}
 
         dataset = []
+
+        if type == 'sat':
+            pass
+        elif type == 'side':
+            pass
+        elif type == 'all':
+            pass
+        else:
+            raise ValueError("input error")
+                
         for img_path in img_paths:
             pid, category, camid = pattern.search(img_path).groups()
+                
             pid, camid = int(pid), int(camid)
             if pid == -1:
                 continue  # junk images are just ignored
@@ -90,6 +101,9 @@ class Building(BaseImageDataset):
             # camid -= 1  # index starts from 0
             # if relabel:
             #     pid = pid2label[pid]
-            dataset.append((img_path, pid, camid))
+            if category == type:
+                dataset.append((img_path, pid, camid))
+            elif type == 'all':
+                dataset.append((img_path, pid, camid))
 
         return dataset

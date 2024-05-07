@@ -68,9 +68,9 @@ def argument_parser():
     parser.add_argument('--start-epoch', default=0, type=int,
                         help='manual epoch number (useful when restart)')
 
-    parser.add_argument('--train-batch-size', default=28, type=int,
+    parser.add_argument('--train-batch-size', default=5, type=int,
                         help='training batch size')
-    parser.add_argument('--test-batch-size', default=28, type=int,
+    parser.add_argument('--test-batch-size', default=5, type=int,
                         help='test batch size')
 
     # ************************************************************
@@ -112,7 +112,7 @@ def argument_parser():
     # ************************************************************
     parser.add_argument('--margin', type=float, default=0.5,
                         help='margin for triplet loss')
-    parser.add_argument('--num-instances', type=int, default=4,
+    parser.add_argument('--num-instances', type=int, default=1,
                         help='number of instances per identity')
     parser.add_argument('--lambda-xent', type=float, default=1.0,
                         help='weight to balance cross entropy loss')
@@ -169,7 +169,7 @@ def argument_parser():
     # ***********************************************************
     # Testing set
     # ************************************************************
-    parser.add_argument('--load-weights', type=bool, default=False,
+    parser.add_argument('--load-weights', type=bool, default=True,
                         help='load pretrained weights but ignore layers that don\'t match in size')
     parser.add_argument('--evaluate', default=True, type=bool,
                         help='evaluate only')
