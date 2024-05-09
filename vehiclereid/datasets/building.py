@@ -38,9 +38,9 @@ class Building(BaseImageDataset):
 
         self.check_before_run()
 
-        train = self.process_dir(self.train_dir, type='all')
-        query = self.process_dir(self.query_dir, type='side')
-        gallery = self.process_dir(self.gallery_dir, type='sat')
+        train = self.process_dir(dir_path=self.train_dir, type='all')
+        query = self.process_dir(dir_path=self.query_dir, type='side')
+        gallery = self.process_dir(dir_path=self.gallery_dir, type='sat')
 
         if verbose:
             print('=> Building loaded')
@@ -53,6 +53,7 @@ class Building(BaseImageDataset):
         self.num_train_pids, self.num_train_imgs, self.num_train_cams = self.get_imagedata_info(self.train)
         self.num_query_pids, self.num_query_imgs, self.num_query_cams = self.get_imagedata_info(self.query)
         self.num_gallery_pids, self.num_gallery_imgs, self.num_gallery_cams = self.get_imagedata_info(self.gallery)
+        exit()
 
     def check_before_run(self):
         """Check if all files are available before going deeper"""
@@ -65,14 +66,14 @@ class Building(BaseImageDataset):
         if not osp.exists(self.gallery_dir):
             raise RuntimeError('"{}" is not available'.format(self.gallery_dir))
 
-    def process_dir(self, dir_path, list_path=None, relabel=False):
+    def process_dir(self, dir_path, list_path=None, relabel=False, type: str='all'):
         img_paths = glob.glob(osp.join(dir_path, '*.jpg'))
 
-        pattern = re.compile(r"[/\w|:|\s|\\|-]*(\d?\d?\d)_(sat|side)_(\d?\d?).jpg$")
+        pattern = re.compile(r"([\\|\/]*)(\d*)_(sat|side)_(\d*).jpg$")
 
         pid_container = set()
         for img_path in img_paths:
-            pid, category, camid = pattern.search(img_path).groups()
+            _temp, pid, category, camid = pattern.search(img_path).groups()    
             pid = int(pid)
             if pid == -1:
                 continue  # junk images are just ignored
@@ -91,7 +92,7 @@ class Building(BaseImageDataset):
             raise ValueError("input error")
                 
         for img_path in img_paths:
-            pid, category, camid = pattern.search(img_path).groups()
+            _temp, pid, category, camid = pattern.search(img_path).groups()
                 
             pid, camid = int(pid), int(camid)
             if pid == -1:
@@ -107,3 +108,15 @@ class Building(BaseImageDataset):
                 dataset.append((img_path, pid, camid))
 
         return dataset
+    
+    def get_imagedata_info(self, data):
+        pids, cams = [], []
+        for _, pid, camid in data:
+            pids.append(pid)
+            cams.append(camid)
+        pids = set(pids)
+        cams = set(cams)
+        num_pids = len(pids)
+        num_cams = len(cams)
+        num_imgs = len(data)
+        return num_pids, num_imgs, num_cams
