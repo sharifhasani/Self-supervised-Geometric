@@ -53,7 +53,6 @@ class Building(BaseImageDataset):
         self.num_train_pids, self.num_train_imgs, self.num_train_cams = self.get_imagedata_info(self.train)
         self.num_query_pids, self.num_query_imgs, self.num_query_cams = self.get_imagedata_info(self.query)
         self.num_gallery_pids, self.num_gallery_imgs, self.num_gallery_cams = self.get_imagedata_info(self.gallery)
-        exit()
 
     def check_before_run(self):
         """Check if all files are available before going deeper"""
