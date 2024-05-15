@@ -171,7 +171,7 @@ def argument_parser():
     # ************************************************************
     parser.add_argument('--load-weights', type=bool, default=True,
                         help='load pretrained weights but ignore layers that don\'t match in size')
-    parser.add_argument('--evaluate', default=True, type=bool,
+    parser.add_argument('--evaluate', default=False, type=bool,
                         help='evaluate only')
     parser.add_argument('--visualize-ranks', default=True, type=bool,
                         help='visualize ranked results, only available in evaluation mode')
