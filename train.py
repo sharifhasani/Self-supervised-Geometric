@@ -176,13 +176,14 @@ def main():
     for epoch in range(args.start_epoch, args.max_epoch):
         train(epoch, model, criterion_xent, criterion_htri, criterion_rot, criterion_eqv, criterion_of, optimizer, trainloader, use_gpu)
         scheduler.step()
-        if (epoch + 1) < args.max_epoch - 2 * args.step_epoch:
-            if (epoch + 1) % 5 == 0:
-                test_now = True
-        else:
-            # if (epoch + 1) % 2 == 0 or (epoch + 1) % 5 == 0 or (epoch + 1) == args.max_epoch:
-            if (epoch + 1) % 5 == 0 or (epoch + 1) == args.max_epoch:
-                test_now = True
+        # if (epoch + 1) < args.max_epoch - 2 * args.step_epoch:
+        #     if (epoch + 1) % 5 == 0:
+        #         test_now = True
+        # else:
+        #     # if (epoch + 1) % 2 == 0 or (epoch + 1) % 5 == 0 or (epoch + 1) == args.max_epoch:
+        #     if (epoch + 1) % 5 == 0 or (epoch + 1) == args.max_epoch:
+        #         test_now = True
+        test_now = True
         if test_now:
             test_now = False
             print('=> Test')

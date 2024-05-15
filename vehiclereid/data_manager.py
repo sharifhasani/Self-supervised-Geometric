@@ -105,6 +105,7 @@ class ImageDataManager(BaseDataManager):
 
             self._num_train_pids += dataset.num_train_pids
             self._num_train_cams += dataset.num_train_cams
+            print(train)
 
         self.train_sampler = build_train_sampler(
             train, self.train_sampler,
@@ -118,6 +119,7 @@ class ImageDataManager(BaseDataManager):
             batch_size=self.train_batch_size, shuffle=False, num_workers=self.workers,
             pin_memory=self.use_gpu, drop_last=True, worker_init_fn=_init_fn
         )
+        print(self.trainloader)
         # mean, std = calculate_mean_and_std(self.trainloader, len(train))
         # print('mean and std:', mean, std)
 
